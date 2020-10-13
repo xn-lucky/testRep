@@ -7,6 +7,10 @@
            * 同样的明文加密后一定得到同样的密文
            * 不可逆 （不能通过密文逆向破解明文）
     (3) 使用
+        
+         const crypto = require('crypto');
+         const secret = '123456';//明文
+
        //使用createHmac方法可以生成一个HMAC对象 参数是加密方式 和 明文
         const hash = crypto.createHmac('MD5', secret);
        //通过digest可以把HMAC对象转换成16进制显示或保存
