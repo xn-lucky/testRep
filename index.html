@@ -1,14 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
-    <h1>看看能不能用</h1>
+    <!--   <h1>看看能不能用</h1>
     <p>我想试试需不需要输入密码</p>
     <p>shabi</p>
-    <h2>master修改</h2>
+    <h2>master修改</h2> -->
+    <script>
+     /*    document.onclick = function () {
+            console.log('1-  '+this);
+            let f = () => {
+                console.log('2-  '+this);
+            }
+            f();
+        } */
+
+        document.onclick = () => {
+            console.log(this);
+            let f = () => {
+                console.log(this);
+            }
+            f();
+        }
+    </script>
 </body>
+
 </html>
