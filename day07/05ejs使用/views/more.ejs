@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>返回的ejs页面</title>
+</head>
+<body>
+      <!-- 
+        <%    %>书写js语句
+        <%=   %> 解析变量 不能解析标签
+        <%-   %> 解析变量 可以解析标签
+     -->
+     <!-- 
+         多条数据，这边获取到的是一个数组dataCol
+
+      -->
+      <% if(dataCol){ dataCol.forEach((item)=>{ %>
+        <p>
+            你的名字:<%= item.name  %>
+        </p>
+        <p>
+            你的年龄:<%= item.age  %>
+        </p>
+     <%  })}%>
+   
+</body>
+</html>
