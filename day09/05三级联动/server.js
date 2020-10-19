@@ -32,6 +32,7 @@ db.then(() => {
                 level: 1
             }, {
                 name: 1,
+                province:1,
                 _id: 0
             });
             // console.log(proData);
@@ -54,15 +55,18 @@ db.then(() => {
         try {
             //首先获取传过来的参数(省份)
             const {province} = req.query;
+            // console.log('province--',province)
+            // console.log(' req.query--', req.query)
             //获取所有的省份
             const cityData = await Cities.find({
                 province,
-                level: 2})
-            // }, {
-            //     name: 1,
-            //     _id: 0
-            // });
-            console.log(cityData);
+                level: 2
+            }, {
+                name: 1,
+                city:1,
+                _id: 0
+            });
+            // console.log('cityData--',cityData);
             //响应数据
             res.json({
                 status: 0,
@@ -83,6 +87,7 @@ db.then(() => {
         try {
             //首先获取传过来的参数(省份\市)
             const {province,city} = req.query;
+            console.log(req.query)
             //获取所有的省份
             const countyData = await Cities.find({
                 province,
@@ -90,6 +95,7 @@ db.then(() => {
                 level: 3
             }, {
                 name: 1,
+                county:1,
                 _id: 0
             });
              console.log(countyData);
