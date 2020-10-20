@@ -95,7 +95,6 @@ db.then(() => {
                 level: 3
             }, {
                 name: 1,
-                county:1,
                 _id: 0
             });
              console.log(countyData);

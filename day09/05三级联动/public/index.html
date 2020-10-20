@@ -26,7 +26,6 @@
     <script type="text/javascript">
         $(function () {
             //省~~~
-            let proDatas= [],cityDatas=[],countyDatas=[];
             //刚进页面就去查省份信息
             // 原始ajax的get请求
             // 1:创建实例化对象
@@ -43,87 +42,96 @@
                     /* xhr.responseXMl:用来接收xml格式的响应
                       xhr.responseText:用来接收json、文本等响应
                  */
-                //获取到数据
-                const {proData} = JSON.parse(xhr.responseText);
-               
-                // console.log(proDatas);
-               
-                proData.forEach((item,index) => {
-                    proDatas.push(item);
-                  
-                    // console.log(item.province);
-                    //创建标签
-                    // $(`<option>${item.name}<option>`).appendTo($('#province'));
-                        $("#province").append(`<option id=${item.province}>${item.name}<option>`);
-                });
-             
-               
+                    //获取到数据
+                    /* const {
+                        proData
+                    } = JSON.parse(xhr.responseText); */
+                    const pData = JSON.parse(xhr.responseText); 
+                    console.log('类型---',typeof pData);
+
+                    console.log(pData);
+                    if(pData.status ===0){
+                        pData.proData.forEach((item, index) => {
+                        //创建标签
+                        // $(`<option>${item.name}<option>`).appendTo($('#province'));
+                        $("#province").append(
+                            `<option value=${item.province}>${item.name}</option>`);
+                    });
+                    }
                 }
             }
 
             //市~~~
-            $("#province").change(function(){
+            $("#province").change(function () {
                 //清空值
-                
-                console.log('proDatas--',proDatas)
-                const pro = proDatas.filter((item,index)=>{
-                    // console.log('pro----',item);
-                    return item.name == $('#province').val();
-                })
-                console.log('pro----',pro);
+                $('#city').empty().append('<option>请选择市</option>');
+                $('#county').empty().append('<option>请选择区(县)</option>');
+                // console.log('proDatas--', proDatas)
+                //获取省的值
+                // const pro = proDatas.filter((item, index) => {
+                //     // console.log('pro----',item);
+                //     return item.name == $('#province').val();
+                // })
+                const province = $('#province').val();
                 $.ajax({
                     type: 'GET',
                     //   get请求参数写法有三种
-                   //第一种，直接在地址后面拼接字符串
-                    url: `/city?province=${pro[0].province}`,
+                    //第一种，直接在地址后面拼接字符串
+                    url: `/city?province=${province}`,
                     success(data) {
                         console.log(data);
-                        data.cityData.forEach((item,index) => {
-                            cityDatas.push(item);
-                    //创建标签
-                    // $(`<option>${item.name}<option>`).appendTo($('#province'));
-                        $("#city").append(`<option id=${item.city}>${item.name}<option>`);
-                });
+                        if (data.status === 0) {
+                            data.cityData.forEach((item, index) => {
+                                //创建标签
+                                // $(`<option>${item.name}<option>`).appendTo($('#province'));
+                                $("#city").append(
+                                    `<option value=${item.city}>${item.name}</option>`
+                                );
+                            });
+                        }
                     },
                     error(err) {
                         console.log(err);
                     }
                 })
-             
+
             })
 
             //3 县~~~·
-            $("#city").change(function(){
-               
-                const pro = proDatas.filter((item,index)=>{
+            $("#city").change(function () {
+                $('#county').empty().append('<option>请选择区(县)</option>');
+                /* 
+                获取值
+                const pro = proDatas.filter((item, index) => {
                     // console.log('pro----',item);
                     return item.name == $('#province').val();
                 })
-                const city = cityDatas.filter((item,index)=>{
+                const city = cityDatas.filter((item, index) => {
                     // console.log('pro----',item);
                     return item.name == $('#city').val();
                 })
-                console.log('city----',city);
-                console.log('pro----',pro);
+                console.log('city----', city);
+                console.log('pro----', pro); */
+                const province = $('#province').val();
+                const city = $('#city').val();
 
-                $.get('/county',{
-                    province:pro[0].province,
-                    city:city[0].city
-
-                },function(data){
-                    console.log(data);
-                        data.countyData.forEach((item,index) => {
-                            countyDatas.push(item);
-                    //创建标签
-                    // $(`<option>${item.name}<option>`).appendTo($('#province'));
-                        $("#county").append(`<option id=${item.county}>${item.name}<option>`);
-                        })
-             
-                }
+                $.get('/county', {
+                        province,
+                        city
+                    }, function (data) {
+                        console.log(data);
+                        if (data.status === 0) {
+                            data.countyData.forEach((item, index) => {
+                                //创建标签
+                                // $(`<option>${item.name}<option>`).appendTo($('#province'));
+                                $("#county").append(
+                                    `<option>${item.name}</option>`);
+                            })
+                        }
+                    }
 
                 );
             })
-
         })
     </script>
 </body>
