@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>localStorage</title>
+</head>
+
+<body>
+    <button id="btn1">点击在本地存储一个localStorage数据</button>
+    <button id="btn2">点击获取本地localStorage数据</button>
+    <button id="btn3">点击删除本地localStorage数据</button>
+
+    <script>
+        /* 
+           LocalStorage:是在window上的对象
+           - 与cookie的区别
+
+               cookie               localStorage
+    大小        4kb左右                   5M
+    数量      20~50(数量有限)             不限
+    时间      可以设置过期时间              永久（清理缓存后就没有了）
+    设置      一般服务端设置              一般是客户端设置
+    请求时    必须发送给服务器             只有在本地存储
+        */
+        const oBtn1 = document.querySelector('#btn1');
+        const oBtn2 = document.querySelector('#btn2');
+        const oBtn3 = document.querySelector('#btn3');
+
+        oBtn1.onclick = function () {
+            //设置一个LocalStorage
+            localStorage.setItem('user1', 'lili');
+            console.log(localStorage);
+            //修改
+            //    localStorage.setItem('user1','haha');
+        }
+        oBtn2.onclick = function () {
+
+            //获取（因为打印出来localStorage是一个对象）,可以直接localStorage.名称即可
+            // console.log(localStorage.user1);
+            // 但一般使用getItem获取
+            console.log(localStorage.getItem('user1'));
+        }
+        oBtn3.onclick = function () {
+            // 删除removeItem
+            console.log(localStorage.removeItem('user1'));
+        }
+    </script>
+</body>
+
+</html>

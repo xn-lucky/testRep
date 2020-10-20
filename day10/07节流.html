@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>节流</title>
+    <style>
+        #box {
+            width: 200px;
+            height: 200px;
+            background-color: hotpink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+
+    <script>
+        /* 
+          节流：
+            - 作用： 为了节约函数的性能（让函数调用的次数更少）
+            - 节流（throttle）： 让函数在单位时间内只调用一次，第一次调用生效。
+               应用场景（还有很多）：
+                    1、发送手机验证码（要隔一段时间才可以再次发送）
+                    2、比如我们的鼠标移动事件，几乎要1ms触发一次，若事件中处理的功能代码很多，还没有处理完，又要再次执行（性能堪忧）
+        */
+        /* 
+           需求：
+             - 鼠标移动事件，希望鼠标移动事件可以每200ms秒触发一次，
+        
+        */
+
+        //创建一个功能函数
+        function move() {
+            console.log(Date.now());
+            console.log(this)
+        }
+
+        const oBox = document.querySelector('#box');
+
+        const result = throttle(move, 200);
+        oBox.onmousemove = result;
+
+        //throttle作为一个中间的运算（提供参数和功能函数），返回值是一个函数（事件函数），事件函数中来判断是否到200ms，若超过200ms，则触发功能函数
+        function throttle(fun, time) {
+
+            //设置初始时间为0，为什么要先设置为0呢，是因为第一次是要触发事件的
+            let lastTime = 0;
+
+            return function () {
+                //这个函数是事件函数，this指向是oBox
+                // console.log(this)
+                //获取当前时间戳
+                let nowTime = Date.now();
+                if (nowTime - lastTime > 200) {
+                    // 时间大于200ms，执行功能函数
+                    //直接调用fun()是不正确的
+                    //原因1：事件函数中的this应该指向的是事件对象即这里应该指向oBox,但是此时指向的是window
+                    //原因2：事件函数都有一个形参event,所以这边也要传个event参数
+                    //arguments是获取的实参的
+                    fun.apply(this,arguments);
+                    //最后同步时间
+                    lastTime = nowTime;
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

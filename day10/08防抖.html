@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+    <style>
+        #box {
+            width: 200px;
+            height: 200px;
+            background-color: hotpink;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box"></div>
+    <script>
+        /* 
+          防抖：
+            - 作用： 为了节约函数的性能（让函数调用的次数更少）
+            - 防抖（debounce）:让函数在单位时间内只调用一次，最后一次调用生效
+                应用场景：
+                     1、搜索栏
+                     2、鼠标移动事件
+        */
+        /* 
+           需求：（大致是与节流相似）
+             - 鼠标移动事件，希望鼠标移动事件可以每200ms秒触发一次，
+        */
+        const oBox = document.querySelector('#box');
+
+        //创建一个功能函数
+        function move() {
+            console.log(Date.now());
+            console.log(this)
+        }
+
+        const result = debounce(move, 200);
+        oBox.onmousemove = result;
+
+        function debounce(fun, time) {
+            //防抖是最后一次调用，可以使用定时器
+            let timerID = null;
+            return function () {
+                //刚进来要先清空定时器
+                clearTimeout(timerID);
+                let args = arguments;
+                timerID = setTimeout(() => {
+                    //因为计时器这边写的是箭头函数，本身没有this,所以向上一层寻找即事件函数的this,
+                    fun.apply(this, args);
+
+                }, time)
+            }
+        }
+    </script>
+
+</body>
+
+</html>

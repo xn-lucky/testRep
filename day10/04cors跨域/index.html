@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQuery的JSONP解决跨域问题</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.js"></script>
+
+</head>
+
+<body>
+    <button id="btn">发送</button>
+    <script>
+        $('#btn').click(function () {
+         //cros跨域请求，客户端发送请求
+         $.get({
+             method:'GET',
+             url:'http://127.0.0.1:3000/user?name=hh&pass=1234567',
+             success(data){
+                 console.log(data);
+             }
+         })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>快速排序</title>
+</head>
+
+<body>
+    <script>
+        /* 
+          - 快速排序 
+            - 使用了递归
+            - 原理：找数组的中间值作为基准baseValue，然后循环遍历数组，创建两个数组left,right，比baseValue小的放到左边left中，比baseValue大的放到右边right中，在分别循环left和right数组中分别找基准值，在继续，直到数组长度为1时退出返回值，最后将数组拼接在一起即可
+        */
+        function quickSort(arr) {
+
+            //临界值判断
+            if (arr.length <= 1) {
+                return arr;
+            }
+
+            //找到基准值baseValue(数组的中间值)
+            const baseValueIndex = Math.floor(arr.length / 2);
+            //返回的是删除的值的数组，取数据，将基准值在arr中排除，避免组合数组时出现问题
+            const baseValue = arr.splice(baseValueIndex, 1)[0];
+            const left = [],
+                right = [];
+            //判断arr中的值与baseValue的值大小
+            arr.forEach((item, index) => {
+                item < baseValue ? left.push(item) : right.push(item);
+            })
+            //拼接数组
+            return quickSort(left).concat(baseValue, quickSort(right));
+        }
+
+        var arr = [1, 8, 2, 4, 9, 4, 5, 2, 7, 6, 5, 3, 8, 5];
+        const newArr = quickSort(arr);
+        console.log(newArr);
+    </script>
+
+</body>
+
+</html>

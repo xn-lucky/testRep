@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSONP解决跨域问题</title>
+</head>
+<body>
+    <button id="btn">发送</button>
+    <script>
+        //使用原生来写
+        const oBtn = document.querySelector('#btn');
+        oBtn.onclick = function(){
+
+            //创建一个函数，在window上，使函数的作用域在全局
+            window.fn = function(data){
+                console.log(data);
+            }
+
+            //创建一个script标签
+            const script = document.createElement('script');
+            //添加跨域的链接地址
+            script.src = 'http://127.0.0.1:3000/user?jsonp=hh&callback=fn';
+
+            //将script插入到文档document.body中（因为script在文档中执行）
+            //数据传输是通过字符串，script接收到响应的值后，会将传过来的字符串中的值当做js代码执行（去掉字符串的引号）
+            document.body.appendChild(script);
+
+        }
+    </script>
+</body>
+</html>

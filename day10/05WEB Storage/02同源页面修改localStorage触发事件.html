@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02同源页面修改localStorage触发事件</title>
+</head>
+
+<body>
+    <h1>02同源页面修改localStorage触发事件</h1>
+    <script>
+        /* 
+            当其他同源页面页面修改了localStorage时，会自动触发其他页面的storage事件
+            从而使其他页面随之更新
+            
+        */
+         window.onstorage = function(data){
+             console.log(data);//一些信息
+             console.log(data.newValue)//修改后的localStorage值
+             console.log(data.oldValue)//修改前的localStorage值
+
+         }
+    </script>
+</body>
+
+</html>

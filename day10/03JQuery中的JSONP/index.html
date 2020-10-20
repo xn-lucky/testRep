@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQuery的JSONP解决跨域问题</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.2.4/jquery.js"></script>
+
+</head>
+
+<body>
+    <button id="btn">发送</button>
+    <script>
+        $('#btn').click(function () {
+            //jQuery的jsonp跨域
+            //参数：第一个参数是你要请求的地址以及拼接的回调函数，callback要和服务器端确认传的参数，callback的值？一定要写。第二个参数是一个函数，就是你请求回来要执行的，不用设置名称，传的时候jQuery会自动添加个函数名
+            $.getJSON('http://127.0.0.1:3000/user?callback=?', function (data) {
+                console.log(data, '--我就是跨域请求回来的数据')
+            })
+        })
+    </script>
+</body>
+
+</html>

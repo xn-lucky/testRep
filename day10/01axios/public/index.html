@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <button id="btn">发送</button>
+    <script>
+        const oBtn = document.querySelector('#btn');
+        oBtn.onclick = function () {
+            //引入axios的包
+            //axios-------get请求（方法1：参数写在了url上）
+            //axios的请求返回的是promise对象
+            /*  axios.get('/user?ID=1234567890')
+             .then((response) => {
+                 //返回成功的数据
+                 // response.data:返回的响应的数据
+                 // response.headers:响应头数据
+                 // response.status:响应状态
+                 // response.statusText:响应的状态信息
+                 console.log('成功数据---',response.data);
+             }).catch((err)=>{
+                 //返回失败的数据
+                 console.log('失败数据---',err);
+             }) */
+
+            //axios-------get请求（方法2：参数不写Url上，写在外边(get的第二个参数)）
+            /*  axios.get('/user', {
+                 params: {
+                     ID: 2345678
+                 }
+             }).then((response) => {
+                 //返回成功的数据
+                 // response.data:返回的响应的数据
+                 // response.headers:响应头数据
+                 // response.status:响应状态
+                 // response.statusText:响应的状态信息
+                 console.log('成功数据---', response.data);
+             }).catch((err) => {
+                 //返回失败的数据
+                 console.log('失败数据---', err);
+             }) */
+
+            //axios-----post请求
+            /*     axios.post('/user', {
+                    firstName: 'hh',
+                    lastName: '98'
+                }).then((response) => {
+                    //返回成功的数据
+                    // response.data:返回的响应的数据
+                    // response.headers:响应头数据
+                    // response.status:响应状态
+                    // response.statusText:响应的状态信息
+                    console.log('post成功数据---', response.data);
+                }).catch((err) => {
+                    //返回失败的数据
+                    console.log('post失败数据---', err);
+                }) */
+
+            // axios 也可以通过传递相关配置来创建请求
+            // --- get请求
+            /*  (传递参数也是两种(1:直接在地址后面拼接。2:使用param对象中写入传递的参数)) */
+            /* axios({
+                method:'GET',
+                //传递参数1
+                // url:'/user?IDcard=0987654321'
+                //传递参数2
+                url:'/user',
+                params:{
+                    IDcard:13579
+                }
+            }).then((response)=>{
+                console.log('传递配置的get请求---',response);
+            }) */
+
+
+            //--- post请求
+              axios({
+                  method:'POST',
+                  url:'/user',
+                  data:{
+                      name1:'gfgf',
+                      name2:'lolo'
+                  }
+              }).then((res)=>{
+                  console.log(res);
+              })
+
+
+            //最后执行多个并发请求
+       /*      function getUserAccount() {
+                return axios.get('/user?ID=12345');
+            }
+
+            function getUserPermissions() {
+                return axios.get('/user2?ID=123456');
+            }
+
+            axios.all([getUserAccount(), getUserPermissions()])
+                .then(axios.spread(function (acct, perms) {
+                    // 两个请求现在都执行完成
+                    console.log(1)
+                })); */
+        }
+    </script>
+
+</body>
+
+</html>
